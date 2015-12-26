@@ -5,6 +5,7 @@
 
 .SvgOverlay {
   position: relative;
+  z-index: 99;
 }
 
 .SvgOverlay svg {
