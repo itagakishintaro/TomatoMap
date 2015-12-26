@@ -1,41 +1,25 @@
 function mapDraw( tomatoArray ) {
-  console.log( 'Start map draw' );
-  draw();
-  // google.maps.event.addDomListener( window, 'load', draw );
-
   var myMap;
-  // var tomatoArray =
-  // [
-  //   {
-  //     name: 'ももたろう',
-  //     lat: 33.559706,
-  //     lng: 133.531079
-  // }, {
-  //     name: 'ももたろう2',
-  //     lat: 33.900000,
-  //     lng: 133.000000
-  // }, {
-  //     name: 'ももたろう3',
-  //     lat: 33.900000,
-  //     lng: 133.900000
-  // }
-  //  ];
 
-  function draw() {
-    initialize();
-    overlayTomato();
-  }
+  console.log( 'BEGIN map draw' );
+  initialize();
+  overlayTomato();
+  console.log( 'END map draw' );
+
+  console.log( 'BEGIN add click event to image' );
+  google.maps.event.addListenerOnce( myMap, 'idle', addClickEventToImage );
+  console.log( 'END add click event to image' );
 
   function initialize() {
     // キャンパスの要素を取得する
     var canvas = document.getElementById( 'map-canvas' );
 
     // 中心の位置座標を指定する
-    var latlng = new google.maps.LatLng( 33.559706, 133.531079 );
+    var latlng = new google.maps.LatLng( 33.539706, 133.531079 );
 
     // 地図のオプションを設定する
     var mapOptions = {
-      zoom: 12, // ズーム値
+      zoom: 11, // ズーム値
       center: latlng, // 中心座標 [latlng]
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       navigationControl: true, // ナビゲーションレベルコントローラ（true/"SMALL"/"ZOOM_PAN"）
@@ -48,24 +32,40 @@ function mapDraw( tomatoArray ) {
     // [canvas]に、[mapOptions]の内容の、地図のインスタンス([map])を作成する
     myMap = new google.maps.Map( canvas, mapOptions );
 
-    // http://phpjavascriptroom.com/?t=ajax&p=googlemapsapiv3_styling
-    var stylesArray = [
+    // https://developers.google.com/maps/documentation/javascript/styling
+    var styles = [
       {
-        elementType: 'geometry',
-        featureType: 'landscape.natural',
         stylers: [
           {
-            visibility: 'simplified'
+            hue: "#00ffe6"
+          },
+          {
+            saturation: -20
           }
-    ]
-  },
-      {
-        featureType: '',
-        // etc...
-  }
-];
+          ]
+        }, {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
+          {
+            lightness: 100
+          },
+          {
+            visibility: "symplified"
+          }
+          ]
+        }, {
+        featureType: "road",
+        elementType: "labels",
+        stylers: [
+          {
+            visibility: "off"
+          }
+          ]
+        }
+      ];
     myMap.setOptions( {
-      styles: stylesArray
+      styles: styles
     } );
   }
 
@@ -84,10 +84,10 @@ function mapDraw( tomatoArray ) {
           overlay.draw = function () {
             // imageを表示
             svg
-            // .selectAll( ".node" )
+            // .selectAll( ".tomato-image" )
             // .data( [ point ] )
               .append( "image" )
-              .attr( "class", "node" )
+              .attr( "class", "tomato-image" )
               .attr( "x", function () {
                 return point.x;
               } )
@@ -98,9 +98,26 @@ function mapDraw( tomatoArray ) {
               .attr( "height", 50 )
               .attr( "xlink:href", "img/tomato01.png" )
               .attr( "id", tomato.objectId )
-              .on( "click", function () {
-                alert( tomato.brand );
+              .attr( "data-brand", tomato.brand )
+              .attr( "data-producer", tomato.producer )
+              .attr( "data-address", tomato.address )
+              .attr( "data-comment", function () {
+                if ( tomato.comment ) {
+                  return tomato.comment;
+                } else {
+                  return '';
+                }
+              } )
+              .attr( "data-picture", function () {
+                if ( tomato.picture ) {
+                  return tomato.picture;
+                } else {
+                  return '';
+                }
               } );
+            // .on( "click", function () {
+            //   alert( tomato.brand );
+            // } );
             // ブランド名をテキストで表示
             svg
             // .selectAll( "text" )
