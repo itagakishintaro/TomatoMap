@@ -1,0 +1,16 @@
+#map-canvas {
+  width: 100%;
+  height: 600px;
+}
+
+.SvgOverlay {
+  position: relative;
+}
+
+.SvgOverlay svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8000px;
+  height: 8000px;
+}
