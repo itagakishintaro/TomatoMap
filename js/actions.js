@@ -1,6 +1,12 @@
+var myModal = [];
+
 function addClickEventToImage() {
+  // TODO: 何故か最後のデータだけダブってしまうので、無理やり削除しているのを直す。
+  $( '.tomato-image' ).last().remove();
+  $( '.SvgOverlay > svg > text' ).last().remove();
+
   $.each( $( '.tomato-image' ), function ( i, v ) {
-    new jBox( 'Modal', {
+    myModal[ i ] = new jBox( 'Modal', {
       width: $( window ).width() - 100,
       height: 500,
       attach: $( '#' + $( v ).attr( 'id' ) ),

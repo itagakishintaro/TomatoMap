@@ -1,3 +1,5 @@
+var IMG_LENGTH = 50;
+
 function mapDraw( tomatoArray ) {
   var myMap;
 
@@ -15,7 +17,7 @@ function mapDraw( tomatoArray ) {
     var canvas = document.getElementById( 'map-canvas' );
 
     // 中心の位置座標を指定する
-    var latlng = new google.maps.LatLng( 33.539706, 133.531079 );
+    var latlng = new google.maps.LatLng( 33.529706, 133.531079 );
 
     // 地図のオプションを設定する
     var mapOptions = {
@@ -77,65 +79,57 @@ function mapDraw( tomatoArray ) {
     overlay.onAdd = function () {
       var layer = d3.select( "#map-canvas" ).append( "div" ).attr( "class", "SvgOverlay" );
       var svg = layer.append( "svg" );
-      tomatoArray.forEach( function ( tomato ) {
-        if ( tomato.lat ) {
-          // 緯度経度をpx座標に変換
-          var point = overlay.getProjection().fromLatLngToDivPixel( new google.maps.LatLng( Number( tomato.lat ), Number( tomato.lng ) ) );
-          overlay.draw = function () {
-            // imageを表示
-            svg
-            // .selectAll( ".tomato-image" )
-            // .data( [ point ] )
-              .append( "image" )
-              .attr( "class", "tomato-image" )
-              .attr( "x", function () {
-                return point.x;
-              } )
-              .attr( "y", function () {
-                return point.y;
-              } )
-              .attr( "width", 50 )
-              .attr( "height", 50 )
-              .attr( "xlink:href", "img/tomato01.png" )
-              .attr( "id", tomato.objectId )
-              .attr( "data-brand", tomato.brand )
-              .attr( "data-producer", tomato.producer )
-              .attr( "data-address", tomato.address )
-              .attr( "data-comment", function () {
-                if ( tomato.comment ) {
-                  return tomato.comment;
-                } else {
-                  return '';
-                }
-              } )
-              .attr( "data-picture", function () {
-                if ( tomato.picture ) {
-                  return tomato.picture;
-                } else {
-                  return '';
-                }
-              } );
-            // .on( "click", function () {
-            //   alert( tomato.brand );
-            // } );
-            // ブランド名をテキストで表示
-            svg
-            // .selectAll( "text" )
-            // .data( [ point ] ).enter()
-              .append( "text" )
-              .attr( "x", function () {
-                return point.x;
-              } )
-              .attr( "y", function () {
-                return point.y;
-              } )
-              .attr( "fill", "red" )
-              .attr( "font-size", "1rem" )
-              .text( tomato.brand );
-          };
-          overlay.draw();
-        } // END of if ( tomato.lat )
-        // overlay.setMap( myMap );
+      tomatoArray.filter( function ( tomato, index, array ) {
+        return tomato.lat;
+      } ).forEach( function ( tomato, index, array ) {
+        console.log( index + ':' + tomato.brand );
+        // 緯度経度をpx座標に変換
+        var point = overlay.getProjection().fromLatLngToDivPixel( new google.maps.LatLng( Number( tomato.lat ), Number( tomato.lng ) ) );
+        overlay.draw = function () {
+          console.log( '=====' );
+          console.log( $( '.tomato-image' ) );
+          // imageを表示
+          svg
+            .append( "image" )
+            .attr( "class", "tomato-image" )
+            .attr( "x", point.x - IMG_LENGTH )
+            .attr( "y", point.y - IMG_LENGTH )
+            .attr( "width", IMG_LENGTH )
+            .attr( "height", IMG_LENGTH )
+            .attr( "xlink:href", "img/tomato01.png" )
+            .attr( "id", tomato.objectId )
+            .attr( "data-brand", tomato.brand )
+            .attr( "data-producer", tomato.producer )
+            .attr( "data-address", tomato.address )
+            .attr( "data-comment", function () {
+              if ( tomato.comment ) {
+                return tomato.comment;
+              } else {
+                return '';
+              }
+            } )
+            .attr( "data-picture", function () {
+              if ( tomato.picture ) {
+                return tomato.picture;
+              } else {
+                return '';
+              }
+            } );
+
+          // ブランド名をテキストで表示
+          svg
+            .append( "text" )
+            .attr( "x", function () {
+              return point.x - IMG_LENGTH;
+            } )
+            .attr( "y", function () {
+              return point.y - IMG_LENGTH;
+            } )
+            .attr( "fill", "red" )
+            .attr( "font-size", "1rem" )
+            .text( tomato.brand );
+        };
+        overlay.draw();
       } ); // END of forEach
     }; // END of overlay.onAdd
     overlay.setMap( myMap );

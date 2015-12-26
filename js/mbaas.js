@@ -38,6 +38,16 @@ function updateTomato() {
         .update()
         .then( function ( tomatoClass ) {
           console.log( tomatoClass );
+          console.log( myModal );
+          myModal.forEach( function ( v ) {
+            v.close();
+          } );
+          console.log( $( '#' + $( '#formId' ).data( 'id' ) ) );
+          $( '#' + $( '#formId' ).data( 'id' ) )
+            .animate( {
+              width: 100,
+              height: 100
+            }, 1000 );
         } )
         .catch( function ( err ) {
           console.log( err );
