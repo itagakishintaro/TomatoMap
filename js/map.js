@@ -17,16 +17,15 @@ function mapDraw( tomatoArray ) {
     var canvas = document.getElementById( 'map-canvas' );
 
     // 中心の位置座標を指定する
-    var latlng = new google.maps.LatLng( 33.529706, 133.531079 );
+    var latlng = new google.maps.LatLng( 33.509706, 133.591079 );
 
     // 地図のオプションを設定する
     var mapOptions = {
       zoom: 11, // ズーム値
       center: latlng, // 中心座標 [latlng]
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      navigationControl: true, // ナビゲーションレベルコントローラ（true/"SMALL"/"ZOOM_PAN"）
-      mapTypeControl: true, //地図タイプコントローラ (true/"DROPDOWN"）
-      scaleControl: true, //スケールの表示
+      mapTypeControl: false, //地図タイプコントローラ (true/"DROPDOWN"）
+      scaleControl: false, //スケールの表示
       DClickZoom: true, //ダブルクリックでのズーム操作(true:有効, false:無効）
       scrollwheel: true, //ホイールでのズーム操作(true:有効, false:無効）
     };
@@ -86,11 +85,9 @@ function mapDraw( tomatoArray ) {
         // 緯度経度をpx座標に変換
         var point = overlay.getProjection().fromLatLngToDivPixel( new google.maps.LatLng( Number( tomato.lat ), Number( tomato.lng ) ) );
         overlay.draw = function () {
-          console.log( '=====' );
-          console.log( $( '.tomato-image' ) );
           // imageを表示
-          svg
-            .append( "image" )
+          var image = svg.append( "image" );
+          image
             .attr( "class", "tomato-image" )
             .attr( "x", point.x - IMG_LENGTH )
             .attr( "y", point.y - IMG_LENGTH )
@@ -114,8 +111,20 @@ function mapDraw( tomatoArray ) {
               } else {
                 return '';
               }
+            } )
+            .attr( "data-point", function () {
+              if ( tomato.point ) {
+                return tomato.point;
+              } else {
+                return 0;
+              }
             } );
-
+          if ( Number( tomato.point ) > 1 ) {
+            image
+              .attr( "xlink:href", "img/tomato02.png" )
+              .attr( "width", IMG_LENGTH * 2 )
+              .attr( "height", IMG_LENGTH * 2 );
+          }
           // ブランド名をテキストで表示
           svg
             .append( "text" )

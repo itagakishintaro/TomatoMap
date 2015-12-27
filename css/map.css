@@ -15,9 +15,3 @@
   width: 8000px;
   height: 8000px;
 }
-
-.tomato-image {
-  -vendor-animation-duration: 3s;
-  -vendor-animation-delay: 2s;
-  -vendor-animation-iteration-count: infinite;
-}

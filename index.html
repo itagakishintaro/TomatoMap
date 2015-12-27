@@ -5,20 +5,27 @@
     <meta charset="UTF-8">
     <title>mBaaS</title>
     <link href="http://code.jboxcdn.com/0.3.2/jBox.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
   </head>
 
 
   <body>
-    <div id="map-canvas"></div>
+    <div class="container">
+      <h1>高知トマト八十八箇所
+        <div class="subtitle">〜トマト博士の歩いた道〜</div>
+      </h1>
+      <div id="map-canvas"></div>
+    </div>
 
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="http://d3js.org/d3.v2.min.js"></script>
     <script src="http://code.jboxcdn.com/0.3.2/jBox.min.js"></script>
-    <!-- mBaaS SDKの読み込み -->
     <script src="js/ncmb.min.js" charset="utf-8"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZAnCPdvCeig9K0NZ07986wqlSQjy3Kr4"></script>
-    <script src="js/actions.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/map.js"></script>
     <script src="js/mbaas.js"></script>
   </body>

@@ -1,4 +1,5 @@
 var myModal = [];
+var selectedImgId;
 
 function addClickEventToImage() {
   // TODO: 何故か最後のデータだけダブってしまうので、無理やり削除しているのを直す。
@@ -12,25 +13,41 @@ function addClickEventToImage() {
       attach: $( '#' + $( v ).attr( 'id' ) ),
       title: $( v ).data( 'brand' ),
       content: `
-        <form>
-          <div id="formId" display="none" data-id="${ $( v ).attr('id') }"></div>
-          <label for="formProducer">生産者</label><br>
-          <input id="formProducer" type="text" value="${ $( v ).data('producer') }" disabled="disabled">
+        <form class="s12" id="form-${ $( v ).attr('id') }">
+          <div id="formId" style="display: none;" data-id="${ $( v ).attr('id') }"></div>
+          <div id="formPoint" style="display: none;">${ $( v ).data('point') }</div>
+
+            <div class="input-field s12">
+              <label for="formProducer" class="tomato-label">生産者</label><br>
+              <input id="formProducer" type="text" value="${ $( v ).data('producer') }" disabled class="validate">
+            </div>
+
+            <div class="input-field s12">
+              <label for="formAddress" class="tomato-label">住所</label><br>
+              <input id="formAddress" type="text" value="${ $( v ).data('address') }" disabled class="validate">
+            </div>
+
+            <div class="input-field s12">
+              <label for="formComment" class="tomato-label">コメント</label><br>
+              <textarea id="formComment" type="text" rows="3"  class="materialize-textarea">${ $( v ).data('comment') }</textarea>
+            </div>
+
+          <div class="input-field s12">
+            <label for="picture" class="tomato-label">写真</label><br>
+            <img src="${ $(v).data('picture') }" id="picture">
+          </div>
           <br>
-          <label for="formAddress">住所</label><br>
-          <input id="formAddress" type="text" value="${ $( v ).data('address') }" disabled="disabled">
-          <br>
-          <label for="formComment">コメント</label><br>
-          <textarea id="formComment" rows="3">${ $( v ).data('comment') }</textarea>
-          <br>
-          <label for="picture">写真</label><br>
-          <img src="${ $(v).data('picture') }" id="picture">
-          <br>
-          <button type="button" id="snapBtn">写真をとる</button>
-          <button type="button" id="submitBtn" onClick="updateTomato()">アップロード</button>
-        </form>
+          <div class="s12">
+            <button type="button" id="snapBtn" class="waves-effect waves-light btn">写真をとる</button>
+            <button type="button" id="submitBtn" class="waves-effect waves-light btn" onClick="updateTomato()">アップロード</button>
+          </div>
+      </form>
         `
     } );
+  } );
+
+  $( '.tomato-image' ).on( 'click', function () {
+    selectedImgId = $( this ).attr( 'id' );
   } );
 }
 

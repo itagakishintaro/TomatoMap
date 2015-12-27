@@ -1,0 +1,26 @@
+body {
+  font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
+}
+
+.subtitle {
+  font-size: 2rem;
+  color: #f44336;
+}
+
+.tomato-image {
+  -vendor-animation-duration: 3s;
+  -vendor-animation-delay: 2s;
+  -vendor-animation-iteration-count: infinite;
+}
+
+.tomato-label:before {
+  margin-left: -1em;
+  content: "";
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background: url(../img/tomato01.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}

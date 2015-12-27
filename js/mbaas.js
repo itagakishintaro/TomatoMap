@@ -5,6 +5,9 @@ var ncmb = new NCMB( "479af5ec8578bc7590a35c30d4a2a4dcf1877d4d74c29d344044eb7ce5
 var TomatoClass = ncmb.DataStore( "tomato" );
 
 $( function () {
+  $.ajaxSetup( {
+    cache: false
+  } );
   getTomatoArray();
 } );
 
@@ -28,22 +31,25 @@ function getTomatoArray() {
 }
 
 function updateTomato() {
+  console.log( '=====' );
+  console.log( $( '#' + selectedImgId ).data( 'brand' ) );
   console.log( $( '#formComment' ).val() );
-  TomatoClass.equalTo( "objectId", $( '#formId' ).data( 'id' ) )
+  TomatoClass.equalTo( "objectId", selectedImgId )
     .fetchAll()
     .then( function ( results ) {
       results[ 0 ]
         .set( 'comment', $( '#formComment' ).val() )
         .set( 'picture', $( '#picture' ).attr( 'src' ) )
+        .set( 'point', Number( $( '#formPoint' ).text() ) + 1 )
         .update()
         .then( function ( tomatoClass ) {
+          console.log( 'Updated!' );
           console.log( tomatoClass );
-          console.log( myModal );
           myModal.forEach( function ( v ) {
             v.close();
           } );
-          console.log( $( '#' + $( '#formId' ).data( 'id' ) ) );
-          $( '#' + $( '#formId' ).data( 'id' ) )
+          $( '#' + selectedImgId )
+            .attr( 'href', 'img/tomato02.png' )
             .animate( {
               width: 100,
               height: 100
