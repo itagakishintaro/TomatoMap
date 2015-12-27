@@ -11,25 +11,25 @@ function addClickEventToImage() {
       width: $( window ).width() - 100,
       height: 500,
       attach: $( '#' + $( v ).attr( 'id' ) ),
-      title: $( v ).data( 'brand' ),
+      title: $( v ).attr( 'data-brand' ),
       content: `
         <form class="s12" id="form-${ $( v ).attr('id') }">
           <div id="formId" style="display: none;" data-id="${ $( v ).attr('id') }"></div>
-          <div id="formPoint" style="display: none;">${ $( v ).data('point') }</div>
+          <div id="formPoint" style="display: none;">${ $( v ).attr('data-point') }</div>
 
             <div class="input-field s12">
               <label for="formProducer" class="tomato-label">生産者</label><br>
-              <input id="formProducer" type="text" value="${ $( v ).data('producer') }" disabled class="validate">
+              <input id="formProducer" type="text" value="${ $( v ).attr('data-producer') }" disabled class="validate">
             </div>
 
             <div class="input-field s12">
               <label for="formAddress" class="tomato-label">住所</label><br>
-              <input id="formAddress" type="text" value="${ $( v ).data('address') }" disabled class="validate">
+              <input id="formAddress" type="text" value="${ $( v ).attr('data-address') }" disabled class="validate">
             </div>
 
             <div class="input-field s12">
               <label for="formComment" class="tomato-label">コメント</label><br>
-              <textarea id="formComment" type="text" rows="3"  class="materialize-textarea">${ $( v ).data('comment') }</textarea>
+              <textarea id="formComment" type="text" rows="3"  class="materialize-textarea">${ $( v ).attr('data-comment') }</textarea>
             </div>
 
           <div class="input-field s12">
@@ -48,6 +48,13 @@ function addClickEventToImage() {
 
   $( '.tomato-image' ).on( 'click', function () {
     selectedImgId = $( this ).attr( 'id' );
+    setTimeout( function () {
+      $( '#formComment' ).on( 'keyup', function () {
+        console.log( $( this ).val() );
+        $( this ).html( $( this ).val() );
+      } );
+    }, 1000 );
+
   } );
 }
 

@@ -5,9 +5,6 @@ var ncmb = new NCMB( "479af5ec8578bc7590a35c30d4a2a4dcf1877d4d74c29d344044eb7ce5
 var TomatoClass = ncmb.DataStore( "tomato" );
 
 $( function () {
-  $.ajaxSetup( {
-    cache: false
-  } );
   getTomatoArray();
 } );
 
@@ -45,7 +42,7 @@ function updateTomato() {
         .then( function ( tomatoClass ) {
           console.log( 'Updated!' );
           console.log( tomatoClass );
-          myModal.forEach( function ( v ) {
+          myModal.forEach( function ( v, i ) {
             v.close();
           } );
           $( '#' + selectedImgId )
